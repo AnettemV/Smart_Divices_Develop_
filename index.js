@@ -8,6 +8,7 @@ connectDB();
 
 app.use(express.json());
 
+
 app.post("/createCard", async (req, res) => {
   try {
     const card = await Card.create(req.body);
@@ -19,6 +20,7 @@ app.post("/createCard", async (req, res) => {
   }
 });
 
+
 app.get("/getAllCards", async (req, res) => {
   try {
     const cards = await Card.find();
@@ -28,6 +30,7 @@ app.get("/getAllCards", async (req, res) => {
     res.status(500).json({ message: "Error fetching cards" });
   }
 });
+
 
 app.get("/getCard/:id", async (req, res) => {
   try {
@@ -41,14 +44,11 @@ app.get("/getCard/:id", async (req, res) => {
 });
 
 
-//esta es parcial
 app.patch("/updateCard/:id", async (req, res) => {
   try {
     const { id } = req.params;
     const updatedCard = await Card.findByIdAndUpdate(id, req.body, { new: true });
-    if (!updatedCard) {
-      return res.status(404).send("Card not found");
-    }
+    if (!updatedCard) return res.status(404).send("Card not found");
     res.status(200).json(updatedCard);
   } catch (error) {
     console.error(error);
@@ -56,14 +56,12 @@ app.patch("/updateCard/:id", async (req, res) => {
   }
 });
 
-//esta es total
+
 app.put("/updateCard/:id", async (req, res) => {
   try {
     const { id } = req.params;
     const updatedCard = await Card.findByIdAndUpdate(id, req.body, { new: true, overwrite: true });
-    if (!updatedCard) {
-      return res.status(404).send("Card not found");
-    }
+    if (!updatedCard) return res.status(404).send("Card not found");
     res.status(200).json(updatedCard);
   } catch (error) {
     console.error(error);
@@ -71,21 +69,18 @@ app.put("/updateCard/:id", async (req, res) => {
   }
 });
 
-
-//borra
 app.delete("/deleteCard/:id", async (req, res) => {
   try {
     const { id } = req.params;
     const deletedCard = await Card.findByIdAndDelete(id);
-    if (!deletedCard) {
-      return res.status(404).send("Card not found");
-    }
+    if (!deletedCard) return res.status(404).send("Card not found");
     res.status(200).send("Card deleted successfully");
   } catch (error) {
     console.error(error);
     res.status(500).send("Error deleting card");
   }
 });
+
 
 app.get("/hola", (req, res) => {
   res.status(200).send("Hola Mundo desde Node.js");
@@ -95,6 +90,21 @@ app.get("/hello", (req, res) => {
   res.status(200).send("Hello World from Node.js");
 });
 
+
+app.get("/endpoints", (req, res) => {
+  const template = [
+    { path: "https://smart-divices-develop.onrender.com/createCard", method: "POST", description: "Creates a new card in the database" },
+    { path: "https://smart-divices-develop.onrender.com/getAllCards", method: "GET", description: "Retrieves all cards" },
+    { path: "https://smart-divices-develop.onrender.com/getCard/:id", method: "GET", description: "Retrieves a card by ID" },
+    { path: "https://smart-divices-develop.onrender.com/updateCard/:id", method: "PATCH", description: "Partially updates a card by ID" },
+    { path: "https://smart-divices-develop.onrender.com/updateCard/:id", method: "PUT", description: "Fully updates a card by ID" },
+    { path: "https://smart-divices-develop.onrender.com/deleteCard/:id", method: "DELETE", description: "Deletes a card by ID" },
+  ];
+
+  res.json(template);
+});
+
 app.listen(3000, () => {
   console.log("Servidor ejecutándose en http://localhost:3000");
 });
+
