@@ -76,8 +76,9 @@ app.delete("/deleteCard/:id", async (req, res) => {
   try {
     const { id } = req.params;
     const deletedCard = await Card.findByIdAndDelete(id);
-    if (!deletedCard) return res.status(404).send("Card not found");
-    res.status(200).send("Card deleted successfully");
+    if (!deletedCard) return res.status(404).json("Card not found");
+    res.status(200).json({ message: "Card deleted successfully" });
+
   } catch (error) {
     console.error(error);
     res.status(500).send("Error deleting card");
