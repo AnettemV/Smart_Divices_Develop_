@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-
+//ggg
 const cardSchema = new mongoose.Schema({
     name:{
         type: String,
