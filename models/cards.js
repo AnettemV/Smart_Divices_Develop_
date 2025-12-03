@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-
+//ggg
 const cardSchema = new mongoose.Schema({
     name:{
         type: String,
@@ -15,7 +15,7 @@ const cardSchema = new mongoose.Schema({
         type: String,
          trim: true
     },
-    Like: {
+    like: {
       type:Boolean,
       default: false,
     },
