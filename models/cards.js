@@ -15,7 +15,7 @@ const cardSchema = new mongoose.Schema({
         type: String,
          trim: true
     },
-    Like: {
+    like: {
       type:Boolean,
       default: false,
     },
